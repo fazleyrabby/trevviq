@@ -47,22 +47,10 @@
         </header>
 
         @if (! is_null($location->latitude) && ! is_null($location->longitude))
-            <div class="mt-8 overflow-hidden rounded-xl border border-white/10 bg-white/5"
-                 role="img"
-                 aria-label="Map placeholder for {{ $location->name }} at coordinates {{ number_format($location->latitude, 5) }}, {{ number_format($location->longitude, 5) }}">
-                <div class="flex flex-col items-center justify-center gap-2 px-6 py-12 text-center">
-                    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-teal-500/15 text-teal-300">
-                        <svg class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 2a6 6 0 00-6 6c0 3.53 4.36 8.5 5.55 9.82a.6.6 0 00.9 0C11.64 16.5 16 11.53 16 8a6 6 0 00-6-6zm0 8.25A2.25 2.25 0 1010 5.75a2.25 2.25 0 000 4.5z" clip-rule="evenodd"/>
-                        </svg>
-                    </span>
-                    <p class="text-sm font-medium text-slate-200">
-                        {{ number_format($location->latitude, 5) }}, {{ number_format($location->longitude, 5) }}
-                    </p>
-                    <p class="max-w-md text-xs text-slate-500">
-                        An interactive map is coming soon. These coordinates pinpoint {{ $location->name }}.
-                    </p>
-                </div>
+            <div class="mt-8 overflow-hidden rounded-xl border border-white/10 bg-white/5 h-80 relative"
+                 x-data="maplibre"
+                 x-init="initMap({ lat: {{ $location->latitude }}, lng: {{ $location->longitude }}, zoom: 12, markerTitle: '{{ addslashes($location->name) }}' })">
+                <div x-ref="mapContainer" class="absolute inset-0 z-0 h-full w-full"></div>
             </div>
         @endif
 

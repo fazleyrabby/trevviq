@@ -117,6 +117,24 @@
         <section class="mt-12" aria-labelledby="places-heading">
             <h2 id="places-heading" class="text-lg font-semibold text-white">Places visited</h2>
 
+            @if($visits->isNotEmpty())
+                @php
+                    $mapData = $visits->filter(fn($v) => !is_null($v->location->latitude) && !is_null($v->location->longitude))
+                        ->map(fn($v) => [
+                            'lat' => $v->location->latitude,
+                            'lng' => $v->location->longitude,
+                            'title' => addslashes($v->location->name)
+                        ])->values()->toJson();
+                @endphp
+                @if($mapData !== '[]')
+                    <div class="mt-4 overflow-hidden rounded-xl border border-white/10 bg-white/5 h-80 relative"
+                         x-data="maplibre"
+                         x-init="initMap({ markers: {{ $mapData }} })">
+                        <div x-ref="mapContainer" class="absolute inset-0 z-0 h-full w-full"></div>
+                    </div>
+                @endif
+            @endif
+
             <div class="mt-4 space-y-3">
                 @forelse ($visits as $visit)
                     <div>

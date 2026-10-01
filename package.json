@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@tabler/core": "^1.6.1",
-        "alpinejs": "^3.17.4"
+        "alpinejs": "^3.17.4",
+        "maplibre-gl": "^6.11.2"
     }
 }

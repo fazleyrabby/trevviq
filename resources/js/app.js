@@ -1,6 +1,8 @@
 import Alpine from 'alpinejs';
+import maplibreAlpine from './maplibre-alpine';
 
 window.Alpine = Alpine;
+Alpine.data('maplibre', maplibreAlpine);
 
 // Scroll reveal observer
 document.addEventListener('DOMContentLoaded', () => {
