@@ -24,6 +24,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReviewHelpfulController;
 use App\Http\Controllers\RobotsController;
+use App\Http\Controllers\LegalController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SavedController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TravelHistoryController;
@@ -34,6 +36,12 @@ use Illuminate\Support\Facades\Route;
 
 // Public site
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Legal pages
+Route::get('/legal/terms', [LegalController::class, 'terms'])->name('legal.terms');
+Route::get('/legal/privacy', [LegalController::class, 'privacy'])->name('legal.privacy');
+Route::get('/legal/acceptable-use', [LegalController::class, 'acceptableUse'])->name('legal.acceptable-use');
+Route::get('/legal/dmca', [LegalController::class, 'dmca'])->name('legal.dmca');
 
 // SEO surface: robots + chunked sitemap (Section 79)
 Route::get('/robots.txt', RobotsController::class)->name('robots');
@@ -111,6 +119,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/saved', [SavedController::class, 'index'])->name('saved.index');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllRead');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markRead');
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

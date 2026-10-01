@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Video;
 use App\Models\VideoLike;
 use Illuminate\Http\RedirectResponse;
+use App\Notifications\VideoLiked;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,6 +23,10 @@ class VideoLikeController extends Controller
                 $existing->delete();
             } else {
                 $video->likes()->create(['user_id' => $request->user()->id]);
+
+                if ($video->user_id !== $request->user()->id) {
+                    $video->user->notify(new VideoLiked($request->user(), $video));
+                }
             }
 
             $video->forceFill(['like_count' => $video->likes()->count()])->save();

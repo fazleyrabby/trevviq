@@ -18,6 +18,9 @@
     <meta name="twitter:card" content="summary_large_image"/>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if(config('trevviq.analytics.umami_website_id'))
+        <script defer src="{{ config('trevviq.analytics.umami_script_url', 'https://analytics.umami.is/script.js') }}" data-website-id="{{ config('trevviq.analytics.umami_website_id') }}"></script>
+    @endif
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
     <header class="border-b border-white/5">
@@ -96,6 +99,14 @@
                             <a href="{{ route('saved.index') }}" class="block px-4 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white">
                                 Saved places
                             </a>
+                            <a href="{{ route('notifications.index') }}" class="block px-4 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white flex items-center justify-between">
+                                Notifications
+                                @if(auth()->user()->unreadNotifications->count() > 0)
+                                    <span class="inline-flex items-center rounded-full bg-teal-500/20 px-2 py-0.5 text-[10px] font-medium text-teal-300">
+                                        {{ auth()->user()->unreadNotifications->count() }}
+                                    </span>
+                                @endif
+                            </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-slate-300 transition hover:bg-white/5 hover:text-white">
@@ -113,8 +124,18 @@
         @yield('content')
     </main>
 
-    <footer class="border-t border-white/5 py-8 text-center text-xs text-slate-500">
-        &copy; {{ date('Y') }} {{ config('app.name') }}. Discover the world through people who have actually been there.
+    <footer class="border-t border-white/5 py-10">
+        <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
+            <p class="text-xs text-slate-500">
+                &copy; {{ date('Y') }} {{ config('app.name') }}. Discover the world through people who have actually been there.
+            </p>
+            <nav class="flex gap-4 text-xs font-medium text-slate-400">
+                <a href="{{ route('legal.terms') }}" class="hover:text-teal-300">Terms</a>
+                <a href="{{ route('legal.privacy') }}" class="hover:text-teal-300">Privacy</a>
+                <a href="{{ route('legal.acceptable-use') }}" class="hover:text-teal-300">Acceptable Use</a>
+                <a href="{{ route('legal.dmca') }}" class="hover:text-teal-300">DMCA</a>
+            </nav>
+        </div>
     </footer>
 </body>
 </html>

@@ -88,6 +88,11 @@ return [
         'auto_approve' => (bool) env('TREVVIQ_EVENTS_AUTO_APPROVE', true),
     ],
 
+    'analytics' => [
+        'umami_website_id' => env('UMAMI_WEBSITE_ID'),
+        'umami_script_url' => env('UMAMI_SCRIPT_URL', 'https://analytics.umami.is/script.js'),
+    ],
+
     'demo' => [
         // One-click demo logins. Off by default in production; on elsewhere so
         // the seeded demo accounts can be used without typing credentials.
