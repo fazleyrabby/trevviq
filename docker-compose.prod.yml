@@ -8,6 +8,9 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    ports:
+      # Direct host access (in addition to Traefik). Set ROAM_PORT in .env.
+      - "${ROAM_PORT:-8090}:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.roam.rule=Host(`${APP_HOST:-roam.example.com}`)"
