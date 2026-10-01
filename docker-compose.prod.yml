@@ -1,0 +1,65 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: roam:latest
+    container_name: roam_app
+    restart: unless-stopped
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.roam.rule=Host(`${APP_HOST:-roam.example.com}`)"
+      - "traefik.http.routers.roam.entrypoints=web"
+      - "traefik.http.services.roam.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.roam-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.middlewares.roam-headers.headers.customrequestheaders.X-Forwarded-Port=443"
+      - "traefik.http.routers.roam.middlewares=roam-headers"
+    volumes:
+      - roam_storage:/var/www/html/storage
+      - roam_bootstrap_cache:/var/www/html/bootstrap/cache
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/up"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    stop_grace_period: 30s
+    networks:
+      - traefik
+      - roam
+      - mysql-shared
+
+  # Dedicated Mailpit instance for this app (captures all outgoing mail).
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: roam_mailpit
+    restart: unless-stopped
+    environment:
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: "true"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "true"
+    volumes:
+      - roam_mailpit_data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.roam-mail.rule=Host(`${MAIL_HOST:-mail.roam.example.com}`)"
+      - "traefik.http.routers.roam-mail.entrypoints=web"
+      - "traefik.http.services.roam-mail.loadbalancer.server.port=8025"
+    networks:
+      - traefik
+      - roam
+
+volumes:
+  roam_storage:
+  roam_bootstrap_cache:
+  roam_mailpit_data:
+
+networks:
+  traefik:
+    external: true
+  mysql-shared:
+    external: true
+  roam:
+    driver: bridge
