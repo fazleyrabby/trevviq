@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventSaveController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\ExploreController;
@@ -16,12 +17,14 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\TravelController;
 use App\Http\Controllers\Frontend\TravellerController;
+use App\Http\Controllers\LocationSaveController;
 use App\Http\Controllers\MyReviewController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReviewHelpfulController;
 use App\Http\Controllers\RobotsController;
+use App\Http\Controllers\SavedController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TravelHistoryController;
 use App\Http\Controllers\VideoController;
@@ -107,6 +110,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/saved', [SavedController::class, 'index'])->name('saved.index');
+
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -129,6 +134,11 @@ Route::middleware('auth')->group(function () {
     // Travel history (Section 20).
     Route::get('/travel-history', [TravelHistoryController::class, 'index'])->name('travel-history.index');
     Route::post('/travel-history', [TravelHistoryController::class, 'store'])->name('travel-history.store');
+
+    // Saved Locations
+    Route::post('/locations/{location}/save', [LocationSaveController::class, 'toggle'])
+        ->middleware('throttle:likes-saves')
+        ->name('locations.save');
     Route::delete('/travel-history/{visit}', [TravelHistoryController::class, 'destroy'])->name('travel-history.destroy');
 
     // Following (Section 24).
@@ -162,6 +172,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/events/{event}/report', [ReportController::class, 'storeEvent'])
         ->middleware('throttle:reports')
         ->name('events.report');
+    Route::post('/events/{event}/save', [EventSaveController::class, 'toggle'])
+        ->middleware('throttle:likes-saves')
+        ->name('events.save');
 });
 
 // Admin CMS

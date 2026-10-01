@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Event extends Model
@@ -64,6 +65,25 @@ class Event extends Model
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'organizer_id');
+    }
+
+    /**
+     * @return HasMany<SavedEvent, $this>
+     */
+    public function saves(): HasMany
+    {
+        return $this->hasMany(SavedEvent::class);
+    }
+
+    public function isSavedBy(?User $user): bool
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        return $this->relationLoaded('saves')
+            ? $this->saves->contains('user_id', $user->id)
+            : $this->saves()->where('user_id', $user->id)->exists();
     }
 
     public function scopePublished(Builder $query): Builder

@@ -121,6 +121,25 @@ class Location extends Model
         return $this->hasMany(TravellerLocation::class);
     }
 
+    /**
+     * @return HasMany<SavedLocation, $this>
+     */
+    public function saves(): HasMany
+    {
+        return $this->hasMany(SavedLocation::class);
+    }
+
+    public function isSavedBy(?User $user): bool
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        return $this->relationLoaded('saves')
+            ? $this->saves->contains('user_id', $user->id)
+            : $this->saves()->where('user_id', $user->id)->exists();
+    }
+
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class);

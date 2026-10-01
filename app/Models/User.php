@@ -87,6 +87,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(SavedVideo::class);
     }
 
+    /**
+     * @return HasMany<SavedLocation, $this>
+     */
+    public function savedLocations(): HasMany
+    {
+        return $this->hasMany(SavedLocation::class);
+    }
+
+    /**
+     * @return HasMany<SavedEvent, $this>
+     */
+    public function savedEvents(): HasMany
+    {
+        return $this->hasMany(SavedEvent::class);
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(Event::class, 'organizer_id');

@@ -93,6 +93,14 @@
 
         <div class="mt-8 flex flex-wrap items-center gap-3">
             @auth
+                <form method="POST" action="{{ route('events.save', $event) }}">
+                    @csrf
+                    <button type="submit"
+                            aria-pressed="{{ $event->isSavedBy(auth()->user()) ? 'true' : 'false' }}"
+                            class="{{ $buttonBase }} {{ $event->isSavedBy(auth()->user()) ? 'border-teal-500/40 bg-teal-500/15 text-teal-200' : 'border-white/10 text-slate-300 hover:bg-white/5' }}">
+                        {{ $event->isSavedBy(auth()->user()) ? 'Saved' : 'Save' }}
+                    </button>
+                </form>
                 @if ($isOwner)
                     <form method="POST"
                           action="{{ route('events.destroy', $event) }}"

@@ -93,6 +93,9 @@
                             <a href="{{ route('reviews.index') }}" class="block px-4 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white">
                                 My reviews
                             </a>
+                            <a href="{{ route('saved.index') }}" class="block px-4 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white">
+                                Saved places
+                            </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-slate-300 transition hover:bg-white/5 hover:text-white">
