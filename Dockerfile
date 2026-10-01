@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         zip \
         ca-certificates \
         default-mysql-client \
+        ffmpeg \
         libpng-dev \
         libjpeg62-turbo-dev \
         libfreetype6-dev \
