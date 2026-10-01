@@ -62,7 +62,7 @@ WORKDIR /var/www/html
 # Server configuration
 COPY docker/nginx.conf /etc/nginx/sites-available/default
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY docker/php.ini /usr/local/etc/php/conf.d/zz-roam.ini
+COPY docker/php.ini /usr/local/etc/php/conf.d/zz-trevviq.ini
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint
 
 # Application code

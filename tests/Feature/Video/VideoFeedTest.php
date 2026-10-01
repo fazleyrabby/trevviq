@@ -4,11 +4,11 @@ use App\Models\User;
 use App\Models\Video;
 
 it('shows the public video feed', function () {
-    Video::factory()->create(['title' => 'Roam public story']);
+    Video::factory()->create(['title' => 'Trevviq public story']);
 
     $this->get(route('videos.index'))
         ->assertOk()
-        ->assertSee('Roam public story');
+        ->assertSee('Trevviq public story');
 });
 
 it('excludes pending and unlisted videos from the feed', function () {

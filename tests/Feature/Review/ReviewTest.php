@@ -107,7 +107,7 @@ it('enforces the review cooldown per location', function () {
 });
 
 it('creates a pending review when auto approval is disabled', function () {
-    config(['roam.reviews.auto_approve' => false]);
+    config(['trevviq.reviews.auto_approve' => false]);
 
     $user = User::factory()->create();
     $location = Location::factory()->create();

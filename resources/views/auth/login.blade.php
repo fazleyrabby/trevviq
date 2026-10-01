@@ -77,7 +77,7 @@
                 </button>
             </form>
 
-            @if (config('roam.demo.enabled'))
+            @if (config('trevviq.demo.enabled'))
                 <div class="mt-6 border-t border-white/10 pt-6">
                     <p class="mb-3 text-center text-xs uppercase tracking-wide text-slate-500">Or try the demo</p>
                     <form method="POST" action="{{ route('demo.login') }}">
@@ -88,7 +88,7 @@
                         </button>
                     </form>
                     <p class="mt-2 text-center text-xs text-slate-500">
-                        {{ config('roam.demo.user_email') }} · password
+                        {{ config('trevviq.demo.user_email') }} · password
                     </p>
                 </div>
             @endif

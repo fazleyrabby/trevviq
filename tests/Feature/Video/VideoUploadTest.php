@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
-    config(['roam.video.disk' => 'public']);
+    config(['trevviq.video.disk' => 'public']);
 });
 
 it('redirects a guest to login for the upload form', function () {

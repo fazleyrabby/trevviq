@@ -16,9 +16,9 @@ class DemoLoginController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        abort_unless(config('roam.demo.enabled'), 404);
+        abort_unless(config('trevviq.demo.enabled'), 404);
 
-        $user = User::query()->where('email', config('roam.demo.user_email'))->first();
+        $user = User::query()->where('email', config('trevviq.demo.user_email'))->first();
 
         if ($user === null) {
             return redirect()->route('login')->withErrors([

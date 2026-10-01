@@ -19,7 +19,7 @@ it('redirects a guest submitting an event to login', function () {
 });
 
 it('lets an authenticated user create a published event', function () {
-    config(['roam.events.auto_approve' => true]);
+    config(['trevviq.events.auto_approve' => true]);
 
     $user = User::factory()->create();
     $location = Location::factory()->create();
@@ -97,7 +97,7 @@ it('rejects an end time before the start time', function () {
 });
 
 it('creates a pending event when auto approval is disabled', function () {
-    config(['roam.events.auto_approve' => false]);
+    config(['trevviq.events.auto_approve' => false]);
 
     $user = User::factory()->create();
     $location = Location::factory()->create();

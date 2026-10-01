@@ -33,7 +33,7 @@ class VideoController extends Controller
     public function store(StoreVideoRequest $request): RedirectResponse
     {
         $file = $request->file('video');
-        $disk = config('roam.video.disk');
+        $disk = config('trevviq.video.disk');
 
         $path = $file->store('videos/originals', $disk);
 

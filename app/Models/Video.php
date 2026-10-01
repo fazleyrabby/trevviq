@@ -128,6 +128,6 @@ class Video extends Model
 
     public function disk(): string
     {
-        return (string) config('roam.video.disk', 'public');
+        return (string) config('trevviq.video.disk', 'public');
     }
 }

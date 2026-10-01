@@ -27,13 +27,13 @@ class ProcessVideo implements ShouldQueue
 
         $result = $processor->process($video);
 
-        $maxDuration = (int) config('roam.video.max_duration');
+        $maxDuration = (int) config('trevviq.video.max_duration');
         $rejected = $result->duration > $maxDuration;
 
         if ($rejected) {
             $status = VideoStatus::Rejected;
         } else {
-            $status = config('roam.video.auto_publish')
+            $status = config('trevviq.video.auto_publish')
                 ? VideoStatus::Published
                 : VideoStatus::Pending;
         }

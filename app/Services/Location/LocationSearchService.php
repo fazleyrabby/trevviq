@@ -19,7 +19,7 @@ class LocationSearchService
     public function search(string $term, ?LocationType $type = null, ?int $perPage = null): LengthAwarePaginator
     {
         $term = trim($term);
-        $perPage = min(max($perPage ?? (int) config('roam.search.default_per_page'), 1), 50);
+        $perPage = min(max($perPage ?? (int) config('trevviq.search.default_per_page'), 1), 50);
         $lower = mb_strtolower($term);
 
         $query = Location::query()->active();

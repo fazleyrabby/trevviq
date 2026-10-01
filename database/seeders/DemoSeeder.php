@@ -26,6 +26,7 @@ use App\Models\VideoLike;
 use App\Services\Location\LocationContentService;
 use App\Services\Location\LocationIndexationService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Comprehensive, idempotent demo dataset covering every module: travellers,
@@ -70,14 +71,14 @@ class DemoSeeder extends Seeder
 
     private function seedUsers(): void
     {
-        $primary = (string) config('roam.demo.user_email', 'traveller@roam.test');
+        $primary = (string) config('trevviq.demo.user_email', 'traveller@trevviq.test');
 
         $definitions = [
             ['name' => 'Fazley Rahman', 'username' => 'fazley', 'email' => $primary, 'country_code' => 'BD', 'bio' => 'Chasing sunsets along the Bay of Bengal.'],
-            ['name' => 'Aiko Tanaka', 'username' => 'aiko', 'email' => 'aiko@roam.test', 'country_code' => 'JP', 'bio' => 'Tokyo-based, always looking for the next alley.'],
-            ['name' => 'Marco Rossi', 'username' => 'marco', 'email' => 'marco@roam.test', 'country_code' => 'FR', 'bio' => 'Slow travel through Europe.'],
-            ['name' => 'Priya Nair', 'username' => 'priya', 'email' => 'priya@roam.test', 'country_code' => 'IN', 'bio' => 'Street food, temples, and long train rides.'],
-            ['name' => 'Leo Chai', 'username' => 'leo', 'email' => 'leo@roam.test', 'country_code' => 'TH', 'bio' => 'Island hopping and night markets.'],
+            ['name' => 'Aiko Tanaka', 'username' => 'aiko', 'email' => 'aiko@trevviq.test', 'country_code' => 'JP', 'bio' => 'Tokyo-based, always looking for the next alley.'],
+            ['name' => 'Marco Rossi', 'username' => 'marco', 'email' => 'marco@trevviq.test', 'country_code' => 'FR', 'bio' => 'Slow travel through Europe.'],
+            ['name' => 'Priya Nair', 'username' => 'priya', 'email' => 'priya@trevviq.test', 'country_code' => 'IN', 'bio' => 'Street food, temples, and long train rides.'],
+            ['name' => 'Leo Chai', 'username' => 'leo', 'email' => 'leo@trevviq.test', 'country_code' => 'TH', 'bio' => 'Island hopping and night markets.'],
         ];
 
         foreach ($definitions as $definition) {
@@ -96,7 +97,7 @@ class DemoSeeder extends Seeder
         }
 
         $this->viewer = User::updateOrCreate(
-            ['email' => 'viewer@roam.test'],
+            ['email' => 'viewer@trevviq.test'],
             [
                 'name' => 'Vera Viewer',
                 'username' => 'vera',
@@ -329,9 +330,13 @@ class DemoSeeder extends Seeder
             ['vera', 'Cafe de Flore', 'Coffee at Cafe de Flore', 'A quiet morning on the terrace.', 22, 130, VideoStatus::Pending],
         ];
 
+        // Small sample clips committed under database/seeders/assets/videos,
+        // cycled across the demo videos so every card and player has real media.
+        $assets = ['sunset-patenga', 'shibuya-night', 'eiffel-sparkle', 'chattogram-food', 'fushimi-torii', 'machu-picchu'];
+
         $models = [];
 
-        foreach ($videos as [$username, $placeName, $title, $description, $duration, $likes, $status]) {
+        foreach ($videos as $index => [$username, $placeName, $title, $description, $duration, $likes, $status]) {
             $location = $byName->get($placeName);
             $user = $this->userByUsername($username);
 
@@ -339,7 +344,7 @@ class DemoSeeder extends Seeder
                 continue;
             }
 
-            $models[] = Video::updateOrCreate(
+            $video = Video::updateOrCreate(
                 ['user_id' => $user->id, 'location_id' => $location->id, 'title' => $title],
                 [
                     'description' => $description,
@@ -354,9 +359,48 @@ class DemoSeeder extends Seeder
                     'published_at' => $status === VideoStatus::Published ? now()->subDays(random_int(1, 60)) : null,
                 ],
             );
+
+            $this->attachVideoMedia($video, $assets[$index % count($assets)]);
+
+            $models[] = $video;
         }
 
         return $models;
+    }
+
+    /**
+     * Copy a committed sample clip + poster onto the video disk and point the
+     * record at them so the feed and player have real media.
+     */
+    private function attachVideoMedia(Video $video, string $asset): void
+    {
+        $source = database_path("seeders/assets/videos/{$asset}.mp4");
+
+        if (! is_file($source)) {
+            return;
+        }
+
+        $disk = Storage::disk($video->disk());
+        $videoPath = "videos/demo/{$asset}.mp4";
+        $disk->put($videoPath, (string) file_get_contents($source));
+
+        $thumbnailSource = database_path("seeders/assets/videos/{$asset}.jpg");
+        $thumbnailPath = null;
+
+        if (is_file($thumbnailSource)) {
+            $thumbnailPath = "videos/demo/{$asset}.jpg";
+            $disk->put($thumbnailPath, (string) file_get_contents($thumbnailSource));
+        }
+
+        $video->forceFill([
+            'processed_path' => $videoPath,
+            'thumbnail_path' => $thumbnailPath,
+            'width' => 480,
+            'height' => 854,
+            'duration' => 4,
+            'stored_bytes' => filesize($source),
+            'mime_type' => 'video/mp4',
+        ])->saveQuietly();
     }
 
     /**

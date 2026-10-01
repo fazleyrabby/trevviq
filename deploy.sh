@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# Deploy Roam to a homelab VPS over SSH.
+# Deploy Trevviq to a homelab VPS over SSH.
 #
 # Usage:
 #   ./deploy.sh user@host [path]

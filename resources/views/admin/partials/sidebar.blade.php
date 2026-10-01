@@ -5,18 +5,18 @@
     <div class="app-sidebar-brand">
         <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center gap-2 text-white text-decoration-none">
             <span class="d-flex align-items-center justify-content-center fw-bold rounded-3"
-                  style="width: 34px; height: 34px; background: var(--roam-accent); font-size: 15px;">R</span>
+                  style="width: 34px; height: 34px; background: var(--trevviq-accent); font-size: 15px;">R</span>
             <span class="d-flex flex-column" style="line-height: 1.1;">
                 <span style="font-size: 14px; font-weight: 800; letter-spacing: 0.05em; color: #ffffff; text-transform: uppercase;">
-                    {{ config('app.name') }} <span style="color: var(--roam-accent);">Admin</span>
+                    {{ config('app.name') }} <span style="color: var(--trevviq-accent);">Admin</span>
                 </span>
-                <span style="font-size: 10px; color: var(--roam-sidebar-muted); font-family: monospace; margin-top: 1px;">Discovery Platform</span>
+                <span style="font-size: 10px; color: var(--trevviq-sidebar-muted); font-family: monospace; margin-top: 1px;">Discovery Platform</span>
             </span>
         </a>
         <button @click="sidebarOpen = false"
                 type="button"
                 class="d-lg-none text-white border-0 bg-transparent p-1"
-                style="cursor: pointer; background: transparent; border: 0; color: var(--roam-sidebar-muted);"
+                style="cursor: pointer; background: transparent; border: 0; color: var(--trevviq-sidebar-muted);"
                 aria-label="Close sidebar">
             <i data-lucide="x" style="width: 20px; height: 20px;"></i>
         </button>
@@ -86,22 +86,22 @@
     <!-- Admin User Footer -->
     <div class="app-sidebar-user">
         <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold flex-shrink-0"
-             style="width: 32px; height: 32px; min-width: 32px; font-size: 13px; background: var(--roam-accent);">
+             style="width: 32px; height: 32px; min-width: 32px; font-size: 13px; background: var(--trevviq-accent);">
             {{ substr(auth('admin')->user()->name ?? 'A', 0, 1) }}
         </div>
         <div style="flex: 1; min-width: 0;">
             <div style="font-size: 12px; font-weight: 600; color: #ffffff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.2;">
                 {{ auth('admin')->user()->name ?? 'Administrator' }}
             </div>
-            <div style="font-size: 11px; color: var(--roam-sidebar-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.2; margin-top: 2px;">
+            <div style="font-size: 11px; color: var(--trevviq-sidebar-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.2; margin-top: 2px;">
                 {{ auth('admin')->user()->email ?? '' }}
             </div>
         </div>
         <form action="{{ route('admin.logout') }}" method="POST" data-confirm="Are you sure you want to log out of the admin panel?" data-confirm-title="Confirm Logout" data-confirm-btn="Yes, Log Out" data-confirm-icon="question" class="m-0 flex-shrink-0">
             @csrf
             <button type="submit" title="Logout"
-                    style="background: transparent; border: 0; color: var(--roam-sidebar-muted); cursor: pointer; padding: 4px; border-radius: 4px;"
-                    onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='var(--roam-sidebar-muted)'">
+                    style="background: transparent; border: 0; color: var(--trevviq-sidebar-muted); cursor: pointer; padding: 4px; border-radius: 4px;"
+                    onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='var(--trevviq-sidebar-muted)'">
                 <i data-lucide="log-out" style="width: 18px; height: 18px;"></i>
             </button>
         </form>

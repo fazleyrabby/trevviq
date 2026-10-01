@@ -4,11 +4,11 @@ use App\Enums\LocationType;
 use App\Models\Location;
 use App\Models\LocationImportBatch;
 
-if (! function_exists('roamGeoNamesRows')) {
+if (! function_exists('trevviqGeoNamesRows')) {
     /**
      * @return array<int, array<int, string>>
      */
-    function roamGeoNamesRows(): array
+    function trevviqGeoNamesRows(): array
     {
         return [
             ['1001', 'Bangladesh', 'Bangladesh', '', '23.6850', '90.3563', 'P', 'PCLI', 'BD', '', '', '', '', '', '170000000', '', '', 'Asia/Dhaka', '2024-01-01'],
@@ -22,13 +22,13 @@ if (! function_exists('roamGeoNamesRows')) {
     }
 }
 
-if (! function_exists('roamWriteGeoNamesFixture')) {
+if (! function_exists('trevviqWriteGeoNamesFixture')) {
     /**
      * @param  array<int, array<int, string>>  $rows
      */
-    function roamWriteGeoNamesFixture(array $rows): string
+    function trevviqWriteGeoNamesFixture(array $rows): string
     {
-        $path = tempnam(sys_get_temp_dir(), 'roam_geonames_');
+        $path = tempnam(sys_get_temp_dir(), 'trevviq_geonames_');
         $handle = fopen($path, 'wb');
 
         foreach ($rows as $row) {
@@ -48,7 +48,7 @@ if (! function_exists('roamWriteGeoNamesFixture')) {
 }
 
 it('imports a country hierarchy and excludes filtered countries', function () {
-    $path = roamWriteGeoNamesFixture(roamGeoNamesRows());
+    $path = trevviqWriteGeoNamesFixture(trevviqGeoNamesRows());
 
     $this->artisan('locations:import', ['--file' => $path, '--country' => 'BD'])->assertExitCode(0);
 
@@ -72,7 +72,7 @@ it('imports a country hierarchy and excludes filtered countries', function () {
 });
 
 it('is idempotent across repeated runs', function () {
-    $path = roamWriteGeoNamesFixture(roamGeoNamesRows());
+    $path = trevviqWriteGeoNamesFixture(trevviqGeoNamesRows());
 
     $this->artisan('locations:import', ['--file' => $path, '--country' => 'BD'])->assertExitCode(0);
     $count = Location::count();
@@ -92,7 +92,7 @@ it('is idempotent across repeated runs', function () {
 });
 
 it('writes nothing on a dry run', function () {
-    $path = roamWriteGeoNamesFixture(roamGeoNamesRows());
+    $path = trevviqWriteGeoNamesFixture(trevviqGeoNamesRows());
 
     $this->artisan('locations:import', ['--file' => $path, '--country' => 'BD', '--dry-run' => true])
         ->assertExitCode(0);
@@ -102,7 +102,7 @@ it('writes nothing on a dry run', function () {
 });
 
 it('records a completed import batch with counters', function () {
-    $path = roamWriteGeoNamesFixture(roamGeoNamesRows());
+    $path = trevviqWriteGeoNamesFixture(trevviqGeoNamesRows());
 
     $this->artisan('locations:import', ['--file' => $path, '--country' => 'BD'])->assertExitCode(0);
 
@@ -123,7 +123,7 @@ it('soft-deactivates stale geonames rows on a fresh import', function () {
         'is_active' => true,
     ]);
 
-    $path = roamWriteGeoNamesFixture(roamGeoNamesRows());
+    $path = trevviqWriteGeoNamesFixture(trevviqGeoNamesRows());
 
     $this->artisan('locations:import', ['--file' => $path, '--country' => 'BD', '--fresh' => true])
         ->assertExitCode(0);

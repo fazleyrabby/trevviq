@@ -13,13 +13,13 @@ return [
     |
     */
     'indexation' => [
-        'content_threshold' => (int) env('ROAM_INDEXATION_THRESHOLD', 3),
-        'description_min_length' => (int) env('ROAM_INDEXATION_DESCRIPTION_LENGTH', 120),
+        'content_threshold' => (int) env('TREVVIQ_INDEXATION_THRESHOLD', 3),
+        'description_min_length' => (int) env('TREVVIQ_INDEXATION_DESCRIPTION_LENGTH', 120),
     ],
 
     'sitemap' => [
-        'chunk_size' => (int) env('ROAM_SITEMAP_CHUNK', 50000),
-        'cache_ttl' => (int) env('ROAM_SITEMAP_CACHE_TTL', 3600),
+        'chunk_size' => (int) env('TREVVIQ_SITEMAP_CHUNK', 50000),
+        'cache_ttl' => (int) env('TREVVIQ_SITEMAP_CACHE_TTL', 3600),
     ],
 
     /*
@@ -44,8 +44,8 @@ return [
     |--------------------------------------------------------------------------
     */
     'nearby' => [
-        'default_radius_meters' => (int) env('ROAM_NEARBY_RADIUS', 5000),
-        'default_limit' => (int) env('ROAM_NEARBY_LIMIT', 12),
+        'default_radius_meters' => (int) env('TREVVIQ_NEARBY_RADIUS', 5000),
+        'default_limit' => (int) env('TREVVIQ_NEARBY_LIMIT', 12),
         'max_limit' => 48,
     ],
 
@@ -56,48 +56,48 @@ return [
     'reviews' => [
         // MVP default: publish traveller reviews immediately. Set to false to
         // route new reviews to the moderation queue (Section 80).
-        'auto_approve' => (bool) env('ROAM_REVIEWS_AUTO_APPROVE', true),
+        'auto_approve' => (bool) env('TREVVIQ_REVIEWS_AUTO_APPROVE', true),
 
         // A user may review the same location once per cooldown window.
-        'cooldown_days' => (int) env('ROAM_REVIEW_COOLDOWN_DAYS', 30),
+        'cooldown_days' => (int) env('TREVVIQ_REVIEW_COOLDOWN_DAYS', 30),
     ],
 
     'video' => [
         // Storage disk for originals, renditions, and thumbnails. Swap to an
         // S3/R2 disk in production (Section 82).
-        'disk' => env('ROAM_VIDEO_DISK', 'public'),
+        'disk' => env('TREVVIQ_VIDEO_DISK', 'public'),
 
         // "fake" (no external binary; tests/local) or "ffmpeg" (production).
-        'processor' => env('ROAM_VIDEO_PROCESSOR', 'fake'),
-        'ffmpeg_bin' => env('ROAM_FFMPEG_BIN', 'ffmpeg'),
-        'ffprobe_bin' => env('ROAM_FFPROBE_BIN', 'ffprobe'),
+        'processor' => env('TREVVIQ_VIDEO_PROCESSOR', 'fake'),
+        'ffmpeg_bin' => env('TREVVIQ_FFMPEG_BIN', 'ffmpeg'),
+        'ffprobe_bin' => env('TREVVIQ_FFPROBE_BIN', 'ffprobe'),
 
         // Server-enforced upload limits (Section 81).
-        'max_duration' => (int) env('ROAM_VIDEO_MAX_DURATION', 60),
-        'max_size_mb' => (int) env('ROAM_VIDEO_MAX_SIZE_MB', 100),
+        'max_duration' => (int) env('TREVVIQ_VIDEO_MAX_DURATION', 60),
+        'max_size_mb' => (int) env('TREVVIQ_VIDEO_MAX_SIZE_MB', 100),
         'mime_types' => ['video/mp4', 'video/quicktime'],
 
         // Publish automatically once processing passes; set false to route to
         // the human moderation queue (Section 80).
-        'auto_publish' => (bool) env('ROAM_VIDEO_AUTO_PUBLISH', true),
+        'auto_publish' => (bool) env('TREVVIQ_VIDEO_AUTO_PUBLISH', true),
     ],
 
     'events' => [
         // Publish traveller/organizer events immediately; set false to route
         // them to the moderation queue.
-        'auto_approve' => (bool) env('ROAM_EVENTS_AUTO_APPROVE', true),
+        'auto_approve' => (bool) env('TREVVIQ_EVENTS_AUTO_APPROVE', true),
     ],
 
     'demo' => [
         // One-click demo logins. Off by default in production; on elsewhere so
         // the seeded demo accounts can be used without typing credentials.
-        'enabled' => (bool) env('ROAM_DEMO_LOGIN', env('APP_ENV', 'production') !== 'production'),
+        'enabled' => (bool) env('TREVVIQ_DEMO_LOGIN', env('APP_ENV', 'production') !== 'production'),
 
-        'user_email' => env('ROAM_DEMO_USER_EMAIL', 'traveller@roam.test'),
-        'user_password' => env('ROAM_DEMO_USER_PASSWORD', 'password'),
+        'user_email' => env('TREVVIQ_DEMO_USER_EMAIL', 'traveller@trevviq.test'),
+        'user_password' => env('TREVVIQ_DEMO_USER_PASSWORD', 'password'),
 
-        'admin_email' => env('ROAM_DEMO_ADMIN_EMAIL', 'admin@roam.test'),
-        'admin_password' => env('ROAM_DEMO_ADMIN_PASSWORD', 'password'),
+        'admin_email' => env('TREVVIQ_DEMO_ADMIN_EMAIL', 'admin@trevviq.test'),
+        'admin_password' => env('TREVVIQ_DEMO_ADMIN_PASSWORD', 'password'),
     ],
 
 ];

@@ -14,8 +14,8 @@ class LocationIndexationService
      */
     public function indexableBySelf(Location $location): bool
     {
-        $threshold = (int) config('roam.indexation.content_threshold');
-        $minLength = (int) config('roam.indexation.description_min_length');
+        $threshold = (int) config('trevviq.indexation.content_threshold');
+        $minLength = (int) config('trevviq.indexation.description_min_length');
 
         return $location->is_verified
             || $location->content_count >= $threshold
@@ -113,8 +113,8 @@ class LocationIndexationService
      */
     private function selfRule($query)
     {
-        $threshold = (int) config('roam.indexation.content_threshold');
-        $minLength = (int) config('roam.indexation.description_min_length');
+        $threshold = (int) config('trevviq.indexation.content_threshold');
+        $minLength = (int) config('trevviq.indexation.description_min_length');
 
         return $query
             ->where('is_verified', true)

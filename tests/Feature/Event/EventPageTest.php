@@ -4,11 +4,11 @@ use App\Models\Event;
 use App\Models\User;
 
 it('shows published upcoming events on the public index', function () {
-    Event::factory()->create(['name' => 'Roam public meetup']);
+    Event::factory()->create(['name' => 'Trevviq public meetup']);
 
     $this->get(route('events.index'))
         ->assertOk()
-        ->assertSee('Roam public meetup');
+        ->assertSee('Trevviq public meetup');
 });
 
 it('excludes pending and past events from the index', function () {

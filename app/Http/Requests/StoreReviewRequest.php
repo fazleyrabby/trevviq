@@ -37,7 +37,7 @@ class StoreReviewRequest extends FormRequest
                 return;
             }
 
-            $days = (int) config('roam.reviews.cooldown_days');
+            $days = (int) config('trevviq.reviews.cooldown_days');
             $alreadyReviewed = Review::query()
                 ->where('user_id', $this->user()->id)
                 ->where('location_id', $this->integer('location_id'))

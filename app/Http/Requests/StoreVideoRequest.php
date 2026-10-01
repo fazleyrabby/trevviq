@@ -18,8 +18,8 @@ class StoreVideoRequest extends FormRequest
      */
     public function rules(): array
     {
-        $maxKb = (int) config('roam.video.max_size_mb') * 1024;
-        $mimeTypes = (array) config('roam.video.mime_types');
+        $maxKb = (int) config('trevviq.video.max_size_mb') * 1024;
+        $mimeTypes = (array) config('trevviq.video.mime_types');
 
         return [
             'video' => [
@@ -42,7 +42,7 @@ class StoreVideoRequest extends FormRequest
     {
         return [
             'video.mimetypes' => 'Videos must be MP4 or MOV files.',
-            'video.max' => 'Videos may not be larger than '.config('roam.video.max_size_mb').' MB.',
+            'video.max' => 'Videos may not be larger than '.config('trevviq.video.max_size_mb').' MB.',
         ];
     }
 }

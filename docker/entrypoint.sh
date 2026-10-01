@@ -51,9 +51,9 @@ php artisan migrate --force || echo "[entrypoint] migrate failed — starting an
 # Always ensure the bootstrap admin account exists (idempotent).
 php artisan db:seed --class='Database\Seeders\AdminUserSeeder' --force || echo "[entrypoint] admin seed skipped."
 
-# Optionally seed the demo dataset (idempotent). Enable with ROAM_SEED_DEMO=true.
-if [ "${ROAM_SEED_DEMO}" = "true" ]; then
-    echo "[entrypoint] Seeding demo data (ROAM_SEED_DEMO=true)..."
+# Optionally seed the demo dataset (idempotent). Enable with TREVVIQ_SEED_DEMO=true.
+if [ "${TREVVIQ_SEED_DEMO}" = "true" ]; then
+    echo "[entrypoint] Seeding demo data (TREVVIQ_SEED_DEMO=true)..."
     php artisan db:seed --class='Database\Seeders\DemoSeeder' --force || echo "[entrypoint] demo seed skipped."
 fi
 

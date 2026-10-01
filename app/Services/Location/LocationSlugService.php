@@ -22,7 +22,7 @@ class LocationSlugService
      */
     public function reservedSegments(): array
     {
-        return (array) config('roam.reserved_slugs', []);
+        return (array) config('trevviq.reserved_slugs', []);
     }
 
     /**

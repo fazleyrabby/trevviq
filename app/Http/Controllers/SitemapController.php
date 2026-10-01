@@ -97,12 +97,12 @@ class SitemapController extends Controller
 
     private function chunkSize(): int
     {
-        return max(1, (int) config('roam.sitemap.chunk_size'));
+        return max(1, (int) config('trevviq.sitemap.chunk_size'));
     }
 
     private function cacheTtl(): int
     {
-        return (int) config('roam.sitemap.cache_ttl');
+        return (int) config('trevviq.sitemap.cache_ttl');
     }
 
     /**

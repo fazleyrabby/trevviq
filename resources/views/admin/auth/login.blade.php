@@ -54,7 +54,7 @@
                            name="email"
                            value="{{ old('email') }}"
                            class="form-control @error('email') is-invalid @enderror"
-                           placeholder="admin@roam.test"
+                           placeholder="admin@trevviq.test"
                            required
                            autofocus>
                     @error('email')
@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    @if (config('roam.demo.enabled'))
+    @if (config('trevviq.demo.enabled'))
         <div class="mt-3">
             <form method="POST" action="{{ route('admin.demo-login') }}">
                 @csrf
@@ -98,7 +98,7 @@
                 </button>
             </form>
             <p class="text-center text-white-50 small mt-2 mb-0">
-                {{ config('roam.demo.admin_email') }} &middot; password
+                {{ config('trevviq.demo.admin_email') }} &middot; password
             </p>
         </div>
     @endif

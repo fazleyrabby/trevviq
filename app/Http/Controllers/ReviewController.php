@@ -19,7 +19,7 @@ class ReviewController extends Controller
 
         Gate::authorize('create', Review::class);
 
-        $status = config('roam.reviews.auto_approve')
+        $status = config('trevviq.reviews.auto_approve')
             ? ReviewStatus::Approved
             : ReviewStatus::Pending;
 

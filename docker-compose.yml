@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: roam:local
-    container_name: roam_app_local
+    image: trevviq:local
+    container_name: trevviq_app_local
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -17,17 +17,17 @@ services:
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: "3306"
-      DB_DATABASE: roam
-      DB_USERNAME: roam
+      DB_DATABASE: trevviq
+      DB_USERNAME: trevviq
       DB_PASSWORD: secret
       MAIL_MAILER: smtp
       MAIL_HOST: mailpit
       MAIL_PORT: "1025"
-      ROAM_SEED_DEMO: "true"
-      ROAM_DEMO_LOGIN: "true"
+      TREVVIQ_SEED_DEMO: "true"
+      TREVVIQ_DEMO_LOGIN: "true"
     volumes:
-      - roam_storage:/var/www/html/storage
-      - roam_bootstrap_cache:/var/www/html/bootstrap/cache
+      - trevviq_storage:/var/www/html/storage
+      - trevviq_bootstrap_cache:/var/www/html/bootstrap/cache
     depends_on:
       mysql:
         condition: service_healthy
@@ -36,17 +36,17 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: roam_mysql_local
+    container_name: trevviq_mysql_local
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: roam
+      MYSQL_DATABASE: trevviq
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_USER: roam
+      MYSQL_USER: trevviq
       MYSQL_PASSWORD: secret
     ports:
       - "3308:3306"
     volumes:
-      - roam_mysql_local:/var/lib/mysql
+      - trevviq_mysql_local:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-psecret"]
       interval: 10s
@@ -55,13 +55,13 @@ services:
 
   mailpit:
     image: axllent/mailpit:latest
-    container_name: roam_mailpit_local
+    container_name: trevviq_mailpit_local
     restart: unless-stopped
     ports:
       - "8025:8025"
       - "1026:1025"
 
 volumes:
-  roam_mysql_local:
-  roam_storage:
-  roam_bootstrap_cache:
+  trevviq_mysql_local:
+  trevviq_storage:
+  trevviq_bootstrap_cache:

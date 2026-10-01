@@ -43,7 +43,7 @@ class EventController extends Controller
     {
         $location = Location::query()->findOrFail($request->integer('location_id'));
 
-        $status = config('roam.events.auto_approve')
+        $status = config('trevviq.events.auto_approve')
             ? EventStatus::Published
             : EventStatus::Pending;
 

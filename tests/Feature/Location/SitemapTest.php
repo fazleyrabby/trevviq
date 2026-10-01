@@ -23,7 +23,7 @@ it('excludes non-indexable locations from the sitemap', function () {
 });
 
 it('splits a large sitemap into an index with paginated chunks', function () {
-    config(['roam.sitemap.chunk_size' => 1]);
+    config(['trevviq.sitemap.chunk_size' => 1]);
 
     Location::factory()->count(2)->create(['indexable' => true]);
 

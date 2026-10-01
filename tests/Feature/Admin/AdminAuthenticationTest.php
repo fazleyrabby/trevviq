@@ -12,12 +12,12 @@ it('redirects guests away from the admin dashboard', function () {
 
 it('authenticates a valid administrator and redirects to the dashboard', function () {
     $admin = Admin::factory()->create([
-        'email' => 'admin@roam.test',
+        'email' => 'admin@trevviq.test',
         'password' => 'password',
     ]);
 
     $response = $this->post(route('admin.login.submit'), [
-        'email' => 'admin@roam.test',
+        'email' => 'admin@trevviq.test',
         'password' => 'password',
     ]);
 
@@ -27,12 +27,12 @@ it('authenticates a valid administrator and redirects to the dashboard', functio
 
 it('rejects invalid administrator credentials', function () {
     Admin::factory()->create([
-        'email' => 'admin@roam.test',
+        'email' => 'admin@trevviq.test',
         'password' => 'password',
     ]);
 
     $response = $this->from(route('admin.login'))->post(route('admin.login.submit'), [
-        'email' => 'admin@roam.test',
+        'email' => 'admin@trevviq.test',
         'password' => 'wrong-password',
     ]);
 

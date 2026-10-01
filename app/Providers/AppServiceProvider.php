@@ -24,10 +24,10 @@ class AppServiceProvider extends ServiceProvider
         // Video processing is swappable: FFmpeg in production, a deterministic
         // fake in tests/local so the pipeline is testable without the binary.
         $this->app->bind(VideoProcessor::class, function (): VideoProcessor {
-            if (config('roam.video.processor') === 'ffmpeg') {
+            if (config('trevviq.video.processor') === 'ffmpeg') {
                 return new FfmpegVideoProcessor(
-                    (string) config('roam.video.ffmpeg_bin'),
-                    (string) config('roam.video.ffprobe_bin'),
+                    (string) config('trevviq.video.ffmpeg_bin'),
+                    (string) config('trevviq.video.ffprobe_bin'),
                 );
             }
 

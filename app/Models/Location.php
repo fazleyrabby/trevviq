@@ -219,9 +219,9 @@ class Location extends Model
         ?int $limit = null,
         array $excludeIds = [],
     ): Collection {
-        $radius = $radiusMeters ?? (int) config('roam.nearby.default_radius_meters');
-        $max = (int) config('roam.nearby.max_limit');
-        $take = min($limit ?? (int) config('roam.nearby.default_limit'), $max);
+        $radius = $radiusMeters ?? (int) config('trevviq.nearby.default_radius_meters');
+        $max = (int) config('trevviq.nearby.max_limit');
+        $take = min($limit ?? (int) config('trevviq.nearby.default_limit'), $max);
 
         return static::query()
             ->active()

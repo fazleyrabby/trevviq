@@ -9,7 +9,7 @@ use App\Services\Location\LocationContentService;
 use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
-    config(['roam.video.disk' => 'public']);
+    config(['trevviq.video.disk' => 'public']);
 });
 
 it('publishes a pending video once processing succeeds', function () {
@@ -33,7 +33,7 @@ it('publishes a pending video once processing succeeds', function () {
 
 it('rejects a video longer than the maximum duration', function () {
     Storage::fake('public');
-    config(['roam.video.max_duration' => 60]);
+    config(['trevviq.video.max_duration' => 60]);
 
     $video = Video::factory()->pending()->create(['duration' => 90]);
 
@@ -47,7 +47,7 @@ it('rejects a video longer than the maximum duration', function () {
 
 it('leaves a valid video pending when auto publish is disabled', function () {
     Storage::fake('public');
-    config(['roam.video.auto_publish' => false]);
+    config(['trevviq.video.auto_publish' => false]);
 
     $video = Video::factory()->pending()->create(['duration' => null]);
 

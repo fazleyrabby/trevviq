@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 
         // Seed the demo dataset outside production. In production, seed it
         // explicitly with `php artisan db:seed --class=DemoSeeder` (the Docker
-        // entrypoint does this when ROAM_SEED_DEMO=true).
+        // entrypoint does this when TREVVIQ_SEED_DEMO=true).
         if (! app()->environment('production')) {
             $this->call(DemoSeeder::class);
         }

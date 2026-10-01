@@ -29,24 +29,24 @@
         }
 
         :root {
-            --roam-accent: #0d9488;
-            --roam-accent-strong: #0f766e;
-            --roam-sidebar-bg: #0f172a;
-            --roam-sidebar-border: #1e293b;
-            --roam-sidebar-muted: #94a3b8;
+            --trevviq-accent: #0d9488;
+            --trevviq-accent-strong: #0f766e;
+            --trevviq-sidebar-bg: #0f172a;
+            --trevviq-sidebar-border: #1e293b;
+            --trevviq-sidebar-muted: #94a3b8;
         }
 
         .app-shell { display: flex; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         .app-sidebar {
             width: 260px; min-width: 260px; max-width: 260px; height: 100vh;
-            background-color: var(--roam-sidebar-bg); border-right: 1px solid var(--roam-sidebar-border);
+            background-color: var(--trevviq-sidebar-bg); border-right: 1px solid var(--trevviq-sidebar-border);
             color: #f1f5f9; display: flex; flex-direction: column; flex-shrink: 0;
             z-index: 1040; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .app-sidebar-brand {
             height: 64px; min-height: 64px; background-color: #090d16;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 16px; border-bottom: 1px solid var(--roam-sidebar-border);
+            padding: 0 16px; border-bottom: 1px solid var(--trevviq-sidebar-border);
         }
         .app-sidebar-nav { flex: 1; overflow-y: auto; padding: 10px 0; }
         .app-sidebar-nav::-webkit-scrollbar { width: 6px; }
@@ -61,12 +61,12 @@
             transition: background 0.15s, color 0.15s;
         }
         .nav-item-link:hover { background-color: #1e293b; color: #ffffff; }
-        .nav-item-link.active { background-color: var(--roam-accent); color: #ffffff; }
-        .nav-item-link.active:hover { background-color: var(--roam-accent-strong); }
+        .nav-item-link.active { background-color: var(--trevviq-accent); color: #ffffff; }
+        .nav-item-link.active:hover { background-color: var(--trevviq-accent-strong); }
         .nav-item-link.is-disabled { opacity: 0.45; cursor: not-allowed; }
         .app-sidebar-user {
             height: 64px; min-height: 64px; background-color: #090d16;
-            border-top: 1px solid var(--roam-sidebar-border);
+            border-top: 1px solid var(--trevviq-sidebar-border);
             display: flex; align-items: center; gap: 10px; padding: 0 14px;
         }
         .app-main { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100vh; overflow: hidden; }
@@ -76,7 +76,7 @@
         }
         .app-content { flex: 1; overflow-y: auto; padding: 24px; }
         .app-footer { flex-shrink: 0; padding: 14px 24px; border-top: 1px solid #e2e8f0; background: #ffffff; color: #64748b; font-size: 12px; }
-        .roam-backdrop { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.5); z-index: 1030; }
+        .trevviq-backdrop { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.5); z-index: 1030; }
 
         @media (max-width: 991.98px) {
             .app-sidebar { position: fixed; top: 0; left: 0; transform: translateX(-100%); }
@@ -90,7 +90,7 @@
     @include('admin.partials.sidebar')
 
     <template x-if="sidebarOpen">
-        <div class="roam-backdrop d-lg-none" @click="sidebarOpen = false"></div>
+        <div class="trevviq-backdrop d-lg-none" @click="sidebarOpen = false"></div>
     </template>
 
     <div class="app-main">
